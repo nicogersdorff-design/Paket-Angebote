@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job-Zufriedenheits-Check | Nico von Gersdorff Karriere Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary-orange: #E85C33;
+            --primary-blue: #4A5D7C;
+            --accent-purple: #8B6B9E;
+            --text-dark: #2C3E50;
+            --text-light: #6C757D;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
+            --border: #DEE2E6;
+            --shadow: rgba(74, 93, 124, 0.15);
+            --orange-light: #FF7A59;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E8EAF0 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 1rem 0.5rem;
+        }
+
+        .top-bar {
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-purple) 100%);
+            height: 8px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 8px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-lines {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+
+        .logo-line {
+            height: 3px;
+            background: var(--primary-orange);
+            border-radius: 2px;
+        }
+
+        .logo-line:nth-child(1) { width: 80%; }
+        .logo-line:nth-child(2) { width: 60%; }
+        .logo-line:nth-child(3) { width: 90%; }
+        .logo-line:nth-child(4) { width: 70%; }
+        .logo-line:nth-child(5) { width: 85%; }
+
+        .logo-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Intro Section */
+        .hero-section {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-orange) 0%, var(--primary-blue) 50%, var(--accent-purple) 100%);
+        }
+
+        .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-orange);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            color: var(--white);
+            border-radius: 4px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .step-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-orange);
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 92, 51, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 92, 51, 0.4);
+        }
+
+        /* Priority Selection */
+        .priority-page {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            border-top: 4px solid var(--primary-blue);
+            margin-bottom: 2rem;
+        }
+
+        .priority-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .priority-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .priority-subtitle {
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        .priority-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .priority-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1.25rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-orange);
+        }
+
+        .priority-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .priority-item-number {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-orange);
+            font-size: 0.9rem;
+        }
+
+        .priority-item-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .priority-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .priority-btn {
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--border);
+            background: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+            font-family: 'Montserrat', sans-serif;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .priority-btn:active {
+            transform: scale(0.95);
+        }
+
+        .priority-btn:hover {
+            border-color: var(--primary-orange);
+        }
+
+        .priority-btn.selected {
+            background: var(--primary-orange);
+            color: var(--white);
+            border-color: var(--primary-orange);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 1.05rem;
+        }
+
+        .progress-percentage {
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-orange) 0%, var(--orange-light) 100%);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .question-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .satisfaction-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .slider-container {
+            padding: 1rem 0;
+        }
+
+        .slider-value {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .slider-value-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .slider-value-label {
+            font-size: 1rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: var(--border);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background: var(--primary-orange);
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(232, 92, 51, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 15px rgba(232, 92, 51, 0.6);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.05);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background: var(--primary-orange);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 3px 10px rgba(232, 92, 51, 0.4);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 54px;
+            touch-action: manipulation;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.98);
+        }
+
+        .nav-btn.secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 3px solid var(--border);
+        }
+
+        .nav-btn.secondary:hover {
+            background: var(--border);
+        }
+
+        .nav-btn.secondary:active {
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.primary {
+            background: var(--primary-orange);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(232, 92, 51, 0.3);
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--orange-light);
+        }
+
+        .nav-btn.primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(232, 92, 51, 0.4);
+        }
+
+        /* Results Section */
+        .results-hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-purple) 100%);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .results-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .score-number {
+            font-size: 4.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            margin: 1rem 0 0.3rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .interpretation-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            border-left: 6px solid var(--primary-orange);
+        }
+
+        .interpretation-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .interpretation-text {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-results-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .category-item {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px var(--shadow);
+            border-left-color: var(--primary-orange);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .category-score {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-orange);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .category-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .category-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1s ease, background 1s ease;
+        }
+
+        /* Legend */
+        .legend-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .legend-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .legend-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .legend-table th {
+            background: var(--bg-light);
+            padding: 1rem;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .legend-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .legend-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .legend-range {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-orange);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .color-indicator {
+            width: 40px;
+            height: 20px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* CTA Card */
+        .cta-card {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--orange-light) 100%);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 8px 30px rgba(232, 92, 51, 0.3);
+        }
+
+        .cta-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .cta-text {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-orange);
+            padding: 1.2rem 3rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* PDF and Restart Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .pdf-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(232, 92, 51, 0.3);
+        }
+
+        .pdf-btn:hover {
+            background: var(--orange-light);
+            transform: translateY(-2px);
+        }
+
+        .restart-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 3px solid var(--primary-blue);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Email Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .form-checkbox label {
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .form-checkbox label a {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+
+        .form-checkbox label a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 2px solid var(--border);
+        }
+
+        .modal-btn.cancel:hover {
+            background: var(--border);
+        }
+
+        .modal-btn.submit {
+            background: var(--primary-orange);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(232, 92, 51, 0.3);
+        }
+
+        .modal-btn.submit:hover {
+            background: var(--orange-light);
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .logo-lines {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+
+            .logo-text p {
+                font-size: 0.85rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-section,
+            .priority-page,
+            .question-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .priority-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .priority-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .priority-btn {
+                flex: 1;
+                padding: 0.7rem 0.75rem;
+                font-size: 0.85rem;
+                min-width: 0;
+            }
+
+            .question-title {
+                font-size: 1.2rem;
+            }
+
+            .slider-value-display {
+                font-size: 2rem;
+            }
+
+            .nav-buttons {
+                position: sticky;
+                bottom: 0;
+                background: var(--white);
+                padding: 1rem;
+                margin: 0 -1rem -1.5rem -1rem;
+                box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+
+            .nav-buttons.mobile-sticky {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                max-width: 100%;
+            }
+
+            .modal-title {
+                font-size: 1.4rem;
+            }
+
+            .legend-table {
+                font-size: 0.85rem;
+            }
+
+            .legend-table th,
+            .legend-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .score-number {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-lines">
+                    <div class="logo-line"></div>
+                    <div class="logo-line"></div>
+                    <div class="logo-line"></div>
+                    <div class="logo-line"></div>
+                    <div class="logo-line"></div>
+                </div>
+                <div class="logo-text">
+                    <h1>Nico von Gersdorff / Karriere Coaching</h1>
+                    <p>Coaching mit Herz und Verstand</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Intro Section -->
+        <div id="intro-section" class="section active">
+            <div class="hero-section">
+                <h2 class="hero-title">Job-Zufriedenheits-Check</h2>
+                <p class="hero-subtitle">Wissenschaftlicher Zufriedenheits-Check in 10 Minuten</p>
+                <p class="intro-text">
+                    Finden Sie heraus, wie zufrieden Sie wirklich sind – und wo konkreter Handlungsbedarf besteht.
+                </p>
+                <p class="intro-text">
+                    Erhalten Sie eine detaillierte Auswertung mit persönlicher Empfehlung.
+                </p>
+
+                <div class="steps-grid">
+                    <div class="step-card" onclick="startAssessment()" style="cursor: pointer;">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Bedeutung festlegen</h3>
+                        <p class="step-description">Bewerten Sie, wie wichtig Ihnen jedes der 11 Kriterien persönlich ist</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Zufriedenheit einschätzen</h3>
+                        <p class="step-description">Geben Sie an, wie zufrieden Sie aktuell mit jedem Bereich sind</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Ergebnis erhalten</h3>
+                        <p class="step-description">Erhalten Sie eine detaillierte Auswertung Ihrer Job-Zufriedenheit</p>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="startAssessment()">Jetzt Check starten</button>
+            </div>
+        </div>
+
+        <!-- Priority Selection Section -->
+        <div id="priority-section" class="section">
+            <div class="priority-page">
+                <div class="priority-header">
+                    <h2 class="priority-title">Wie wichtig sind Ihnen diese Bereiche?</h2>
+                    <p class="priority-subtitle">Bitte bewerten Sie die Bedeutung jeder Kategorie für Sie persönlich</p>
+                </div>
+
+                <div class="priority-list" id="priority-list"></div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn primary" onclick="finishPriorities()">Weiter zu den Fragen</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Satisfaction Questions Section -->
+        <div id="questions-section" class="section">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="progress-text">Ihr Fortschritt</span>
+                    <span class="progress-percentage" id="progress-text">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div id="question-container"></div>
+
+            <div class="nav-buttons" id="question-nav">
+                <button class="nav-btn secondary" id="prev-btn" onclick="previousQuestion()" style="display: none;">
+                    Zurück
+                </button>
+                <button class="nav-btn primary" id="next-btn" onclick="nextQuestion()">
+                    Weiter
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="section">
+            <div class="results-hero" id="results-hero">
+                <h2 class="results-title">Ihre Ergebnisse</h2>
+                <div class="score-number" id="total-score">0%</div>
+                <div class="score-label">Gesamt-Zufriedenheit</div>
+            </div>
+
+            <div class="interpretation-card" id="interpretation"></div>
+
+            <div class="action-buttons" style="margin: 2rem 0;">
+                <button class="pdf-btn" onclick="openEmailModal()">
+                    📄 Ergebnis als PDF herunterladen
+                </button>
+                <button class="restart-btn" onclick="restartAssessment()">
+                    Neuen Check durchführen
+                </button>
+            </div>
+
+            <div class="category-results">
+                <h3 class="category-results-title">Detaillierte Auswertung nach Kategorien</h3>
+                <div id="category-results-container"></div>
+            </div>
+
+            <div class="legend-card">
+                <h3 class="legend-title">Bewertungslegende</h3>
+                <table class="legend-table">
+                    <thead>
+                        <tr>
+                            <th>Bereich</th>
+                            <th>Bewertung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="legend-range">
+                                    <span class="color-indicator" style="background: #4CAF50;"></span>
+                                    90-100%
+                                </div>
+                            </td>
+                            <td>Sehr hohe Zufriedenheit, vermutlich kein Änderungsbedarf</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="legend-range">
+                                    <span class="color-indicator" style="background: #66BB6A;"></span>
+                                    80-90%
+                                </div>
+                            </td>
+                            <td>Hohe Zufriedenheit, in 12 Monaten erneuten Check machen</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="legend-range">
+                                    <span class="color-indicator" style="background: #FFC107;"></span>
+                                    70-80%
+                                </div>
+                            </td>
+                            <td>Mittlere Zufriedenheit, in die Analyse einsteigen, ggfs. reichen schon Veränderungen innerhalb des jetzigen Jobs</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="legend-range">
+                                    <span class="color-indicator" style="background: #FF9800;"></span>
+                                    60-70%
+                                </div>
+                            </td>
+                            <td>Unzureichende Zufriedenheit, in die Analyse einsteigen, Potenziale und Marktmöglichkeiten prüfen</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="legend-range">
+                                    <span class="color-indicator" style="background: #E85C33;"></span>
+                                    &lt;60%
+                                </div>
+                            </td>
+                            <td>Mangelhafte Zufriedenheit, in die Analyse einsteigen und Alternativen entwickeln</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cta-card">
+                <h3 class="cta-title">Karriere in Schwung bringen</h3>
+                <p class="cta-text">
+                    Ich unterstütze Sie dabei, Antworten zu folgenden Fragen zu finden: Was ist mir wichtig? 
+                    Wo liegen (verborgene) Potenziale? Wo gibt es Handlungsbedarf? Welche Möglichkeiten gibt es auf dem Arbeitsmarkt?
+                </p>
+                <a href="https://calendly.com/nico-gersdorff/30min" class="cta-button" target="_blank">
+                    Kostenlosen Kennenlerntermin vereinbaren
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div class="modal-overlay" id="email-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">📧</div>
+                <h3 class="modal-title">PDF herunterladen</h3>
+                <p class="modal-subtitle">Bitte geben Sie Ihre Daten ein, um das PDF zu erhalten</p>
+            </div>
+
+            <form id="email-form" onsubmit="handleEmailSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label" for="user-name">Ihr Name</label>
+                    <input type="text" id="user-name" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="user-email">Ihre E-Mail-Adresse</label>
+                    <input type="email" id="user-email" class="form-input" required>
+                </div>
+
+                <div class="form-checkbox-group">
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="newsletter-opt-in">
+                        <label for="newsletter-opt-in">
+                            Ja, ich möchte Coaching-Tipps und News per Newsletter erhalten (optional)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel" onclick="closeEmailModal()">
+                        Abbrechen
+                    </button>
+                    <button type="submit" class="modal-btn submit" id="submit-btn">
+                        PDF herunterladen
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("wPFHKOdC5Ozp7AuWM");
+        })();
+
+        const categories = [
+            {
+                number: 1,
+                title: "Sinnstiftende Arbeit",
+                description: "Empfinden Sie Ihre Arbeit als sinnvoll? Erkennen und schätzen Sie den Beitrag Ihres Jobs u.a. zum Unternehmenserfolg?"
+            },
+            {
+                number: 2,
+                title: "Spaß an der Arbeit (Erfüllung & Flow)",
+                description: "Macht Ihnen Ihre Arbeit Spaß? Befindet sich die Arbeit großteils in einem Bereich, der Sie weder unterfordert, noch überfordert? Kommt es Ihnen manchmal so vor, als wenn die Zeit verfliegt?"
+            },
+            {
+                number: 3,
+                title: "Anerkennung und Wertschätzung",
+                description: "Werden Ihre Leistungen und Ihr Engagement angemessen anerkannt? Erhalten Sie in angemessener Form Lob und Anerkennung?"
+            },
+            {
+                number: 4,
+                title: "Entwicklungsmöglichkeiten & Perspektiven",
+                description: "Haben Sie die Aussicht auf eine für Sie passende, fachliche und/oder disziplinarische Karriereentwicklung? Haben Sie Möglichkeiten zur beruflichen Weiterentwicklung und Fortbildung?"
+            },
+            {
+                number: 5,
+                title: "Ein gutes Arbeitsumfeld",
+                description: "Haben Sie gute Arbeitsbedingungen sowie ein gutes Arbeitsklima? Sind die Beziehungen zu Kollegen und Vorgesetzten positiv?"
+            },
+            {
+                number: 6,
+                title: "Work-Life-Balance",
+                description: "Haben Sie geeignete Möglichkeiten, Arbeit und Privatleben in Einklang zu bringen? Entsprechen Flexibilität bei Arbeitszeiten und -ort Ihren Anforderungen und Ihrer Lebensphase?"
+            },
+            {
+                number: 7,
+                title: "Vertrauen und Transparenz",
+                description: "Stärkt die Führungsebene durch offene Kommunikation das gegenseitige Vertrauen? Ist es dem Unternehmen wichtig, Mitarbeiter in wichtige Entscheidungen einzubeziehen?"
+            },
+            {
+                number: 8,
+                title: "Fairness und Gerechtigkeit",
+                description: "Fühlen Sie sich fair behandelt in Bezug auf Entlohnung und zusätzliche Benefits? Werden Chancen und Verantwortlichkeiten fair verteilt?"
+            },
+            {
+                number: 9,
+                title: "Gemeinsame Werte und Unternehmenskultur",
+                description: "Stehen Ihre persönlichen Werte mit denen des Unternehmens in Einklang? Dies bezieht sich auf den Geschäftszweck, die interne Kooperation sowie den Umgang mit Kunden & Partnern."
+            },
+            {
+                number: 10,
+                title: "Sicherheit und Stabilität",
+                description: "Haben Sie ein positives Gefühl hinsichtlich der Arbeitsplatzsicherheit und das Gefühl, dass das Unternehmen langfristig erfolgreich sein wird?"
+            },
+            {
+                number: 11,
+                title: "Möglichkeiten zur Mitgestaltung",
+                description: "Haben Sie die Möglichkeit, auf die Sie betreffenden Entscheidungen - d.h. auf ihre Arbeit und ihr Umfeld - Einfluss zu nehmen?"
+            }
+        ];
+
+        let priorities = {};
+        let satisfactions = {};
+        let currentQuestion = 0;
+        let resultsData = null;
+
+        // Start Assessment
+        function startAssessment() {
+            // Initialize all priorities to 'mittel'
+            categories.forEach(cat => {
+                priorities[cat.number] = 'mittel';
+            });
+            
+            showSection('priority-section');
+            renderPriorityList();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render Priority List
+        function renderPriorityList() {
+            const container = document.getElementById('priority-list');
+            container.innerHTML = categories.map(cat => `
+                <div class="priority-item">
+                    <div class="priority-item-info">
+                        <div class="priority-item-number">${cat.number}.</div>
+                        <div class="priority-item-title">${cat.title}</div>
+                    </div>
+                    <div class="priority-buttons">
+                        <button 
+                            class="priority-btn ${priorities[cat.number] === 'gering' ? 'selected' : ''}"
+                            onclick="setPriority(${cat.number}, 'gering')"
+                            type="button">
+                            nicht so wichtig
+                        </button>
+                        <button 
+                            class="priority-btn ${priorities[cat.number] === 'mittel' ? 'selected' : ''}"
+                            onclick="setPriority(${cat.number}, 'mittel')"
+                            type="button">
+                            ziemlich wichtig
+                        </button>
+                        <button 
+                            class="priority-btn ${priorities[cat.number] === 'hoch' ? 'selected' : ''}"
+                            onclick="setPriority(${cat.number}, 'hoch')"
+                            type="button">
+                            sehr wichtig
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Set Priority
+        function setPriority(catNumber, priority) {
+            priorities[catNumber] = priority;
+            renderPriorityList();
+        }
+
+        // Finish Priorities
+        function finishPriorities() {
+            // Initialize all satisfactions to 50%
+            categories.forEach(cat => {
+                satisfactions[cat.number] = 50;
+            });
+            
+            showSection('questions-section');
+            currentQuestion = 0;
+            showQuestion(currentQuestion, true);
+        }
+
+        // Show Question
+        function showQuestion(index, shouldScroll = false) {
+            currentQuestion = index;
+            const cat = categories[index];
+            const satisfaction = satisfactions[cat.number];
+            
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="question-card" id="current-question">
+                    <div class="question-number">Frage ${index + 1} von ${categories.length}</div>
+                    <h3 class="question-title">${cat.title}</h3>
+                    <p class="question-description">${cat.description}</p>
+                    
+                    <label class="satisfaction-label">Wie zufrieden sind Sie aktuell in diesem Bereich?</label>
+                    <div class="slider-container">
+                        <div class="slider-value">
+                            <span class="slider-value-display">${satisfaction}%</span>
+                            <span class="slider-value-label">${getSatisfactionLabel(satisfaction)}</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="100" 
+                            step="5" 
+                            value="${satisfaction}"
+                            oninput="updateSatisfaction(${cat.number}, this.value)">
+                        <div class="slider-labels">
+                            <span>0% - Katastrophal</span>
+                            <span>100% - Perfekt</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+            updateNavButtons();
+            
+            if (shouldScroll && window.innerWidth <= 768) {
+                setTimeout(() => {
+                    const questionCard = document.getElementById('current-question');
+                    if (questionCard) {
+                        questionCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Update Satisfaction
+        function updateSatisfaction(catNumber, value) {
+            satisfactions[catNumber] = parseInt(value);
+            document.querySelector('.slider-value-display').textContent = value + '%';
+            document.querySelector('.slider-value-label').textContent = getSatisfactionLabel(value);
+        }
+
+        // Get Satisfaction Label
+        function getSatisfactionLabel(value) {
+            if (value >= 90) return "Sehr zufrieden";
+            if (value >= 75) return "Zufrieden";
+            if (value >= 60) return "Eher zufrieden";
+            if (value >= 40) return "Mäßig zufrieden";
+            if (value >= 25) return "Eher unzufrieden";
+            return "Unzufrieden";
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / categories.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+        }
+
+        // Update Navigation Buttons
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+            
+            if (currentQuestion === categories.length - 1) {
+                nextBtn.textContent = 'Ergebnis anzeigen';
+            } else {
+                nextBtn.textContent = 'Weiter';
+            }
+        }
+
+        // Previous Question
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1, true);
+            }
+        }
+
+        // Next Question
+        function nextQuestion() {
+            if (currentQuestion < categories.length - 1) {
+                showQuestion(currentQuestion + 1, true);
+            } else {
+                showResults();
+            }
+        }
+
+        // Calculate Results
+        function calculateResults() {
+            const priorityPoints = {
+                'hoch': 20,
+                'mittel': 10,
+                'gering': 4
+            };
+            
+            let totalPoints = 0;
+            let maxPoints = 0;
+            
+            const categoryScores = categories.map(cat => {
+                const priority = priorities[cat.number];
+                const satisfaction = satisfactions[cat.number];
+                const maxCategoryPoints = priorityPoints[priority];
+                const earnedPoints = (maxCategoryPoints * satisfaction) / 100;
+                
+                totalPoints += earnedPoints;
+                maxPoints += maxCategoryPoints;
+                
+                return {
+                    category: cat.title,
+                    priority: priority,
+                    score: earnedPoints,
+                    maxScore: maxCategoryPoints,
+                    percentage: satisfaction
+                };
+            });
+            
+            const totalPercentage = Math.round((totalPoints / maxPoints) * 100);
+            
+            return {
+                totalPercentage,
+                totalPoints: totalPoints.toFixed(1),
+                maxPoints,
+                categoryScores
+            };
+        }
+
+        // Get Interpretation
+        function getInterpretation(percentage) {
+            if (percentage >= 90) {
+                return {
+                    title: "Sehr hohe Zufriedenheit",
+                    text: "Ihre Job-Zufriedenheit liegt im Spitzenbereich. Haben Sie eine ausgezeichnete Balance zwischen Ihren Prioritäten und der aktuellen Situation gefunden?",
+                    recommendation: "Kein unmittelbarer Änderungsbedarf. Nutzen Sie Ihre positive Situation als Ausgangsbasis für weiteres Wachstum."
+                };
+            } else if (percentage >= 80) {
+                return {
+                    title: "Hohe Zufriedenheit",
+                    text: "Ihre Job-Zufriedenheit ist sehr gut. Um diese positive Entwicklung beizubehalten und frühzeitig eventuelle Veränderungen zu erkennen, empfiehlt sich eine regelmäßige Standortbestimmung.",
+                    recommendation: "Führen Sie in 12 Monaten einen erneuten Check durch, um die Entwicklung zu monitoren."
+                };
+            } else if (percentage >= 70) {
+                return {
+                    title: "Mittlere Zufriedenheit",
+                    text: "Ihre Job-Zufriedenheit liegt im mittleren Bereich. Eine detaillierte Analyse kann Ansatzpunkte für Verbesserungen identifizieren. Wo sehen Sie das größte Optimierungspotenzial?",
+                    recommendation: "Analysieren Sie die Kategorien mit niedrigerer Bewertung. Prüfen Sie, ob Optimierungen innerhalb Ihrer aktuellen Position möglich sind."
+                };
+            } else if (percentage >= 60) {
+                return {
+                    title: "Unzureichende Zufriedenheit",
+                    text: "Mehrere Bereiche erfüllen nicht Ihre Erwartungen. Eine systematische Analyse Ihrer beruflichen Situation ist empfehlenswert. Welche Veränderungen würden den größten Unterschied machen?",
+                    recommendation: "Evaluieren Sie sowohl interne Entwicklungsmöglichkeiten als auch externe Marktoptionen. Eine professionelle Standortbestimmung kann hierbei unterstützen."
+                };
+            } else {
+                return {
+                    title: "Mangelhafte Zufriedenheit",
+                    text: "Ihre Job-Zufriedenheit ist kritisch niedrig. Belastet Sie die aktuelle Situation erheblich? Welche ersten Schritte könnten Sie zeitnah zur Verbesserung unternehmen?",
+                    recommendation: "Entwickeln Sie konkrete Alternativen für Ihre berufliche Zukunft. Professionelle Begleitung durch ein Coaching kann den Veränderungsprozess strukturieren und beschleunigen."
+                };
+            }
+        }
+
+        // Show Results
+        function showResults() {
+            resultsData = calculateResults();
+            const interpretation = getInterpretation(resultsData.totalPercentage);
+            
+            // Set hero background color based on score
+            const hero = document.getElementById('results-hero');
+            let bgColor = '';
+            if (resultsData.totalPercentage >= 90) {
+                bgColor = 'linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%)';
+            } else if (resultsData.totalPercentage >= 80) {
+                bgColor = 'linear-gradient(135deg, #8BC34A 0%, #9CCC65 100%)';
+            } else if (resultsData.totalPercentage >= 70) {
+                bgColor = 'linear-gradient(135deg, #FFC107 0%, #FFD54F 100%)';
+            } else if (resultsData.totalPercentage >= 60) {
+                bgColor = 'linear-gradient(135deg, #FF9800 0%, #FFB74D 100%)';
+            } else {
+                bgColor = 'linear-gradient(135deg, #E85C33 0%, #FF7043 100%)';
+            }
+            hero.style.background = bgColor;
+            
+            document.getElementById('total-score').textContent = resultsData.totalPercentage + '%';
+            
+            document.getElementById('interpretation').innerHTML = `
+                <h3 class="interpretation-title">${interpretation.title} (${resultsData.totalPoints} von ${resultsData.maxPoints} Punkten)</h3>
+                <p class="interpretation-text">${interpretation.text}</p>
+                <p class="interpretation-text" style="margin-top: 1.5rem;"><strong>Empfehlung:</strong> ${interpretation.recommendation}</p>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <a href="https://calendly.com/nico-gersdorff/30min" class="cta-button" target="_blank" style="display: inline-block; text-decoration: none;">
+                        Kostenlosen Kennenlerntermin vereinbaren
+                    </a>
+                </div>
+            `;
+            
+            const container = document.getElementById('category-results-container');
+            container.innerHTML = resultsData.categoryScores
+                .sort((a, b) => a.percentage - b.percentage)
+                .map(cat => {
+                    let barColor;
+                    if (cat.percentage >= 75) {
+                        barColor = '#4CAF50';
+                    } else if (cat.percentage >= 50) {
+                        barColor = '#FFC107';
+                    } else if (cat.percentage >= 25) {
+                        barColor = '#FF9800';
+                    } else {
+                        barColor = '#E85C33';
+                    }
+                    
+                    return `
+                    <div class="category-item">
+                        <div class="category-header">
+                            <div class="category-title">${cat.category}</div>
+                            <div class="category-score">${cat.percentage}%</div>
+                        </div>
+                        <div class="category-bar">
+                            <div class="category-bar-fill" style="width: ${cat.percentage}%; background: ${barColor};"></div>
+                        </div>
+                    </div>
+                `}).join('');
+            
+            showSection('results-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Email Modal Functions
+        function openEmailModal() {
+            document.getElementById('email-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEmailModal() {
+            document.getElementById('email-modal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('email-form').reset();
+        }
+
+        async function handleEmailSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const userName = document.getElementById('user-name').value;
+            const userEmail = document.getElementById('user-email').value;
+            const newsletterOptIn = document.getElementById('newsletter-opt-in').checked;
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird verarbeitet...';
+            
+            try {
+                // Generate and download PDF immediately
+                generatePDFDirect();
+                
+                // Prepare email parameters for coach notification
+                const emailParams = {
+                    user_name: userName,
+                    user_email: userEmail,
+                    total_percentage: resultsData.totalPercentage,
+                    total_points: resultsData.totalPoints,
+                    max_points: resultsData.maxPoints,
+                    newsletter: newsletterOptIn ? 'Ja' : 'Nein',
+                    date: new Date().toLocaleDateString('de-DE')
+                };
+                
+                // Send notification to coach only
+                await emailjs.send(
+                    'service_xoea2cq',
+                    'template_fehq90l',
+                    emailParams
+                );
+                
+                alert('✅ PDF wurde heruntergeladen!');
+                closeEmailModal();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // Even if email fails, user still has the PDF
+                alert('✅ PDF wurde heruntergeladen!');
+                closeEmailModal();
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'PDF herunterladen';
+            }
+        }
+
+        // Generate and Download PDF directly
+        function generatePDFDirect() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const results = resultsData;
+            const interpretation = getInterpretation(results.totalPercentage);
+            const categoryScores = results.categoryScores;
+            
+            const primaryBlue = [74, 93, 124];
+            const primaryOrange = [232, 92, 51];
+            const strengthGreen = [76, 175, 80];
+            const lightGreen = [232, 245, 233];
+            
+            // Header
+            doc.setFillColor(...primaryBlue);
+            doc.rect(0, 0, 210, 30, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.setFont(undefined, 'bold');
+            doc.text('Job-Zufriedenheits-Check', 105, 15, { align: 'center' });
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('Nico von Gersdorff / Karriere Coaching', 105, 23, { align: 'center' });
+            
+            // Score Box
+            doc.setFillColor(250, 250, 250);
+            doc.rect(20, 38, 170, 25, 'F');
+            
+            doc.setTextColor(...primaryOrange);
+            doc.setFontSize(32);
+            doc.setFont(undefined, 'bold');
+            doc.text(results.totalPercentage + '%', 105, 54, { align: 'center' });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Gesamt-Zufriedenheit', 105, 60, { align: 'center' });
+            
+            let yPos = 72;
+            
+            // ========== INTERPRETATION (ZUERST) ==========
+            doc.setFontSize(13);
+            doc.setTextColor(...primaryBlue);
+            doc.setFont(undefined, 'bold');
+            doc.text(interpretation.title, 20, yPos);
+            
+            yPos += 7;
+            doc.setFontSize(9);
+            doc.setTextColor(80, 80, 80);
+            doc.setFont(undefined, 'normal');
+            
+            const splitText = doc.splitTextToSize(interpretation.text, 170);
+            doc.text(splitText, 20, yPos);
+            yPos += splitText.length * 4.5 + 10; // +10 für Abstand
+            
+            // ========== STÄRKEN-ANKER (Top 2-3 Kategorien) ==========
+            const sortedByStrength = [...categoryScores].sort((a, b) => b.percentage - a.percentage);
+            const topStrengths = sortedByStrength.slice(0, 3).filter(cat => cat.percentage >= 60);
+            
+            if (topStrengths.length > 0) {
+                // Berechne benötigte Höhe mit exakten Abständen
+                const numLines = topStrengths.length;
+                const oneLineSpace = 5; // 1 Zeile Abstand = 5mm
+                const minimalBottomSpace = 3; // Stark reduziert!
+                const titleHeight = 6;
+                const bulletHeight = 7;
+                const textHeight = 12; // Durchschnittlich 3 Zeilen à 4mm
+                
+                const boxHeight = oneLineSpace + titleHeight + oneLineSpace + (numLines * bulletHeight) + oneLineSpace + textHeight + minimalBottomSpace;
+                
+                // Grüne Box für Stärken-Anker
+                doc.setFillColor(...lightGreen);
+                doc.setDrawColor(...strengthGreen);
+                doc.setLineWidth(0.5);
+                doc.rect(20, yPos, 170, boxHeight, 'FD');
+                
+                yPos += 5; // 1 Zeile Abstand oberhalb der Überschrift
+                
+                // Icon und Titel
+                doc.setFontSize(14);
+                doc.setTextColor(...strengthGreen);
+                doc.setFont(undefined, 'bold');
+                doc.text('+', 25, yPos + 4);
+                
+                doc.setFontSize(11);
+                doc.text(topStrengths.length === 1 ? 'Ihr persönlicher Stärken-Anker' : 'Ihre persönlichen Stärken-Anker', 34, yPos + 4);
+                
+                yPos += 5 + 5; // Titel-Höhe + 1 Zeile Abstand unterhalb der Überschrift
+                
+                // Liste der Stärken
+                topStrengths.forEach((cat, index) => {
+                    doc.setFontSize(9);
+                    doc.setTextColor(...primaryBlue);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(`${index + 1}. ${cat.category}: ${cat.percentage}%`, 27, yPos);
+                    yPos += 7; // Abstand zwischen Bullets bleibt gleich
+                });
+                
+                yPos += 5; // 1 Zeile Abstand unterhalb des 3. Bullets
+                
+                // Beschreibungstext
+                doc.setFontSize(8.5);
+                doc.setTextColor(60, 60, 60);
+                doc.setFont(undefined, 'normal');
+                const strengthText = topStrengths.length === 1 
+                    ? `In einem Umfeld, das Sie aktuell als kritisch empfinden, ist dies Ihr Anker. Können Sie diese Stärke nutzen, um auch andere Bereiche zu verbessern?`
+                    : `Diese Bereiche sind Ihre Kraftquellen. Wie können Sie diese Stärken nutzen, um auch andere Bereiche zu verbessern?`;
+                const splitStrength = doc.splitTextToSize(strengthText, 160);
+                doc.text(splitStrength, 27, yPos);
+                
+                yPos += splitStrength.length * 4 + 3; // Text-Höhe + minimal Abstand (stark reduziert von 10 auf 3)
+            }
+            
+            // ========== HANDLUNGSFELDER (Bottom 2-3 Kategorien) ==========
+            const bottomCategories = [...categoryScores].sort((a, b) => a.percentage - b.percentage);
+            const actionFields = bottomCategories.slice(0, 3).filter(cat => cat.percentage < 65);
+            
+            if (actionFields.length > 0) {
+                // Prüfe ob neue Seite nötig
+                if (yPos > 220) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                
+                // Berechne benötigte Höhe mit exakten Abständen
+                const numLines = actionFields.length;
+                const oneLineSpace = 5; // 1 Zeile Abstand = 5mm
+                const minimalBottomSpace = 3; // Stark reduziert!
+                const titleHeight = 6;
+                const bulletHeight = 7;
+                const textHeight = 12; // Durchschnittlich 3 Zeilen à 4mm
+                
+                const boxHeight = oneLineSpace + titleHeight + oneLineSpace + (numLines * bulletHeight) + oneLineSpace + textHeight + minimalBottomSpace;
+                
+                // Orange Box für Handlungsfelder
+                doc.setFillColor(255, 243, 224); // Light Orange
+                doc.setDrawColor(...primaryOrange);
+                doc.setLineWidth(0.5);
+                doc.rect(20, yPos, 170, boxHeight, 'FD');
+                
+                yPos += 5; // 1 Zeile Abstand oberhalb der Überschrift
+                
+                // Icon und Titel
+                doc.setFontSize(14);
+                doc.setTextColor(...primaryOrange);
+                doc.setFont(undefined, 'bold');
+                doc.circle(28, yPos + 2, 2, 'FD');
+                
+                doc.setFontSize(11);
+                doc.text(actionFields.length === 1 ? 'Ihr Handlungsfeld' : 'Ihre Handlungsfelder', 34, yPos + 4);
+                
+                yPos += 5 + 5; // Titel-Höhe + 1 Zeile Abstand unterhalb der Überschrift
+                
+                // Liste der Handlungsfelder
+                actionFields.forEach((cat, index) => {
+                    doc.setFontSize(9);
+                    doc.setTextColor(...primaryBlue);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(`${index + 1}. ${cat.category}: ${cat.percentage}%`, 27, yPos);
+                    yPos += 7; // Abstand zwischen Bullets bleibt gleich
+                });
+                
+                yPos += 5; // 1 Zeile Abstand unterhalb des 3. Bullets
+                
+                // Beschreibungstext
+                doc.setFontSize(8.5);
+                doc.setTextColor(60, 60, 60);
+                doc.setFont(undefined, 'normal');
+                const actionText = actionFields.length === 1
+                    ? `Hier besteht Entwicklungspotenzial. Was wäre ein erster konkreter Schritt zur Verbesserung in diesem Bereich?`
+                    : `Diese Bereiche bieten Entwicklungspotenzial. Welchen Bereich möchten Sie zuerst angehen?`;
+                const splitAction = doc.splitTextToSize(actionText, 160);
+                doc.text(splitAction, 27, yPos);
+                
+                yPos += splitAction.length * 4 + 3; // Text-Höhe + minimal Abstand (stark reduziert von 10 auf 3)
+            }
+            
+            // ========== 3-STUFIGER AKTIONSPLAN ==========
+            // Prüfe ob neue Seite nötig
+            if (yPos > 200) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFillColor(...primaryBlue);
+            doc.rect(20, yPos, 170, 8, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Ihr persönlicher 3-Stufen-Aktionsplan', 105, yPos + 5.5, { align: 'center' });
+            
+            yPos += 14;
+            
+            // SCHRITT 1: Stagnations-Fokus
+            doc.setFontSize(10);
+            doc.setTextColor(...primaryOrange);
+            doc.setFont(undefined, 'bold');
+            
+            // Kleines Quadrat als Marker
+            doc.setFillColor(...primaryOrange);
+            doc.rect(22, yPos - 2.5, 2, 2, 'F');
+            
+            doc.text('Schritt 1: Erkennen Sie die Stagnation', 27, yPos);
+            
+            yPos += 5;
+            doc.setFontSize(8.5);
+            doc.setTextColor(60, 60, 60);
+            doc.setFont(undefined, 'normal');
+            
+            const stagnantCategories = categoryScores.filter(cat => cat.percentage >= 45 && cat.percentage <= 55);
+            
+            if (stagnantCategories.length > 0) {
+                const catNames = stagnantCategories.map(c => c.category).join(', ');
+                const step1Text = `Werte um 50% (wie bei: ${catNames}) deuten auf eine "innere Wartestellung" hin. Erkennen Sie sich wieder? Warten Sie darauf, dass sich etwas ändert, anstatt aktiv zu werden?`;
+                const splitStep1 = doc.splitTextToSize(step1Text, 165);
+                doc.text(splitStep1, 27, yPos);
+                yPos += splitStep1.length * 4 + 6;
+            } else {
+                const step1Text = `Werte um 50% deuten auf eine "innere Wartestellung" hin. Erkennen Sie sich wieder? Warten Sie darauf, dass sich etwas ändert, anstatt aktiv zu werden?`;
+                const splitStep1 = doc.splitTextToSize(step1Text, 165);
+                doc.text(splitStep1, 27, yPos);
+                yPos += splitStep1.length * 4 + 6;
+            }
+            
+            // SCHRITT 2: Eine-Sache-Methode
+            doc.setFontSize(10);
+            doc.setTextColor(...primaryOrange);
+            doc.setFont(undefined, 'bold');
+            
+            // Kleines Quadrat als Marker
+            doc.setFillColor(...primaryOrange);
+            doc.rect(22, yPos - 2.5, 2, 2, 'F');
+            
+            doc.text('Schritt 2: Die "Eine-Sache"-Methode', 27, yPos);
+            
+            yPos += 5;
+            doc.setFontSize(8.5);
+            doc.setTextColor(60, 60, 60);
+            doc.setFont(undefined, 'normal');
+            const step2Text = actionFields.length > 0
+                ? `Versuchen Sie nicht, alle Baustellen gleichzeitig anzugehen. Welches der oben genannten Handlungsfelder möchten Sie zuerst angehen? Was wäre ein kleiner, konkreter erster Schritt?`
+                : `Versuchen Sie nicht, alle Baustellen gleichzeitig anzugehen. Welche Kategorie kostet Sie am meisten Energie? Was wäre ein kleiner, konkreter erster Schritt zur Verbesserung?`;
+            const splitStep2 = doc.splitTextToSize(step2Text, 165);
+            doc.text(splitStep2, 27, yPos);
+            yPos += splitStep2.length * 4 + 6;
+            
+            // SCHRITT 3: Coaching als Werkzeugkasten
+            doc.setFontSize(10);
+            doc.setTextColor(...primaryOrange);
+            doc.setFont(undefined, 'bold');
+            
+            // Kleines Quadrat als Marker
+            doc.setFillColor(...primaryOrange);
+            doc.rect(22, yPos - 2.5, 2, 2, 'F');
+            
+            doc.text('Schritt 3: Coaching als Werkzeugkasten nutzen', 27, yPos);
+            
+            yPos += 5;
+            doc.setFontSize(8.5);
+            doc.setTextColor(60, 60, 60);
+            doc.setFont(undefined, 'normal');
+            
+            if (topStrengths.length > 0) {
+                const strengthNames = topStrengths.map(s => s.category).join(', ');
+                const step3Text = `Nutzen Sie Coaching nicht zur Krisenbewältigung, sondern als Werkzeugkasten. Wie können Sie Ihre Stärken (${strengthNames}) nutzen, um auch andere Bereiche zu verbessern? Welche Strategien könnten funktionieren?`;
+                const splitStep3 = doc.splitTextToSize(step3Text, 165);
+                doc.text(splitStep3, 27, yPos);
+                yPos += splitStep3.length * 4 + 1;
+            } else {
+                const step3Text = `Nutzen Sie Coaching nicht zur Krisenbewältigung, sondern als Werkzeugkasten zur systematischen Verbesserung. Welche konkreten Strategien könnten Sie für nachhaltige Veränderung entwickeln?`;
+                const splitStep3 = doc.splitTextToSize(step3Text, 165);
+                doc.text(splitStep3, 27, yPos);
+                yPos += splitStep3.length * 4 + 1;
+            }
+            
+            // ========== TERMIN-BUTTON ==========
+            // Prüfe ob neue Seite nötig (braucht mindestens 25mm Platz)
+            if (yPos > 245) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            yPos += 5;
+            
+            // Orange Button-Box
+            doc.setFillColor(232, 92, 51);
+            doc.roundedRect(50, yPos, 110, 15, 2, 2, 'F');
+            
+            // Button-Text (nur ASCII-Zeichen)
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Kostenlosen Termin vereinbaren', 105, yPos + 9.5, { align: 'center' });
+            
+            // Klickbarer Link
+            doc.link(50, yPos, 110, 15, { url: 'https://calendly.com/nico-gersdorff/30min' });
+            
+            yPos += 20;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...primaryOrange);
+            doc.setFont(undefined, 'bold');
+            doc.text(`Erreichte Punkte: ${results.totalPoints} von ${results.maxPoints}`, 20, yPos);
+            
+            yPos += 12;
+            
+            // ========== DETAILLIERTE KATEGORIEN-AUSWERTUNG ==========
+            if (yPos > 240) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFillColor(...primaryBlue);
+            doc.rect(20, yPos, 170, 10, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Detaillierte Auswertung nach Kategorien', 105, yPos + 7, { align: 'center' });
+            
+            yPos += 18;
+            doc.setFontSize(9);
+            
+            const sortedCategories = categoryScores.sort((a, b) => b.percentage - a.percentage);
+            
+            sortedCategories.forEach((cat) => {
+                if (yPos > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                
+                doc.setTextColor(...primaryBlue);
+                doc.setFont(undefined, 'bold');
+                doc.text(cat.category, 20, yPos);
+                
+                doc.setTextColor(...primaryOrange);
+                doc.text(cat.percentage + '%', 190, yPos, { align: 'right' });
+                
+                yPos += 4;
+                doc.setDrawColor(220, 220, 220);
+                doc.setFillColor(220, 220, 220);
+                doc.rect(20, yPos, 170, 3, 'F');
+                
+                let barColor;
+                if (cat.percentage >= 75) {
+                    barColor = [76, 175, 80];
+                } else if (cat.percentage >= 50) {
+                    barColor = [255, 193, 7];
+                } else if (cat.percentage >= 25) {
+                    barColor = [255, 152, 0];
+                } else {
+                    barColor = [232, 92, 51];
+                }
+                
+                doc.setFillColor(...barColor);
+                doc.rect(20, yPos, (170 * cat.percentage) / 100, 3, 'F');
+                
+                yPos += 9;
+            });
+            
+            const pageCount = doc.internal.getNumberOfPages();
+            doc.setPage(pageCount);
+            doc.setFontSize(8);
+            doc.setTextColor(120, 120, 120);
+            doc.text('Nico von Gersdorff Karriere Coaching', 105, 285, { align: 'center' });
+            doc.text('https://nico-gersdorff-coaching.de', 105, 290, { align: 'center' });
+            
+            // Download PDF directly
+            const today = new Date().toISOString().split('T')[0];
+            doc.save(`Job-Zufriedenheit-Check_${today}.pdf`);
+        }
+
+        // Restart Assessment
+        function restartAssessment() {
+            priorities = {};
+            satisfactions = {};
+            currentQuestion = 0;
+            resultsData = null;
+            showSection('intro-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Utility Functions
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('email-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEmailModal();
+            }
+        });
+    </script>
+</body>
+</html>
